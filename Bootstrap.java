@@ -21,16 +21,16 @@ public class Bootstrap extends Server {
     private void initialize() {
         // Dummy previous and head, initial state of linked list is
         // dummyStart -> head -> dummyNext
-        Node dummyHead = new Node("-1", -1, -1, -1);
+        head = new Node("0", this.portNumber, 0, 0);
         Node dummyTail = new Node("1024", -1, 1024, 1024);
-        Node bootstrapNode = new Node(this.id, this.portNumber, 0, 1023);
+        Node bootstrapNode = new Node(this.id, this.portNumber, 1, 1023);
 
-        dummyHead.setNext(bootstrapNode);
-        bootstrapNode.setPrevious(dummyHead);
+        head.setNext(bootstrapNode);
+        bootstrapNode.setPrevious(head);
         bootstrapNode.setNext(dummyTail);
         dummyTail.setPrevious(bootstrapNode);
-
-        this.head = dummyHead;
+        
+        head.setPrevious(bootstrapNode);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Bootstrap extends Server {
 
     private void seeNodePath() {
         System.out.println("\nPath of nodes");
-        Node curNode = this.head.next;
+        Node curNode = this.head;
         while (curNode != null && !curNode.id.equals("1024")) {
             System.out.println("Node: " + curNode.id + ", Start: " + curNode.start + ", End: " + curNode.end);
             curNode = curNode.next;
